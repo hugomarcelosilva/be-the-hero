@@ -21,9 +21,24 @@
 ```bash
 # instalar os pacotes e dependências
 yarn
+
+# iniciar a aplicação backend
+yarn start
 ```
 
 ---
+
+## :computer: Front-end
+
+### :information_source: Instruções Front-end
+
+```bash
+#instalar os pacotes e dependências
+yarn
+
+# iniciar a aplicação frontend
+yarn start
+```
 
 ## :memo: Licença
 
