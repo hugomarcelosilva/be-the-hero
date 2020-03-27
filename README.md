@@ -14,6 +14,10 @@
 <a href="https://www.codacy.com/manual/hugo-marcelo/be-the-hero?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hugo-marcelo/be-the-hero&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/147d0b2836734c79b7ee5ea035f065b4"/></a>
 </p>
 
+<p align="center">
+  <a href="https://insomnia.rest/run/?label=Be%20The%20Hero%20API&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fhugo-marcelo%2Fbe-the-hero%2Fmaster%2Fbackend%2FInsomnia.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
+</p>
+
 ## :gear: Back-end
 
 ### :information_source: Instruções Back-end
