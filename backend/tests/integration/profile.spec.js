@@ -4,11 +4,11 @@ const connection = require('../../src/database/connection');
 
 describe('Profile', () => {
   beforeEach(async () => {
-    await connection.migrate.rollback();
     await connection.migrate.latest();
   });
 
   afterAll(async () => {
+    await connection.migrate.rollback();
     await connection.destroy();
   });
 
