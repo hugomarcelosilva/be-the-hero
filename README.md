@@ -40,6 +40,20 @@ yarn
 yarn start
 ```
 
+---
+
+## :iphone: Mobile
+
+### :information_source: Instruções Mobile
+
+```bash
+#instalar os pacotes e dependências
+yarn
+
+# iniciar o aplicativo no expo
+yarn start
+```
+
 ## :memo: Licença
 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
@@ -48,4 +62,4 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## :clap: Obrigado
 
-[Rocketseat](https://rocketseat.com.br/) pela semana!
+[Rocketseat](https://rocketseat.com.br/) pela semana omnistack!
