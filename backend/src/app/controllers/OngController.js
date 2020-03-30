@@ -1,5 +1,6 @@
-const generateUniqueId = require('../utils/generateUniqueId');
-const connection = require('../database/connection');
+const generateUniqueId = require('../../utils/generateUniqueId');
+const connection = require('../../database/connection');
+const Mail = require('./MailController');
 
 module.exports = {
   async index(request, response) {
@@ -20,6 +21,12 @@ module.exports = {
       whatsapp,
       city,
       uf,
+    });
+
+    Mail.Send({
+      id,
+      name,
+      email,
     });
 
     return response.json({ id });
