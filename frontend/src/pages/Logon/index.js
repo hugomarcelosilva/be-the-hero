@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FiLogIn } from 'react-icons/fi';
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { ThemeContext } from 'styled-components';
 
 import api from '../../services/api';
-import './styles.css';
 
-import logoImg from '../../assets/logo.svg';
 import heroesImg from '../../assets/heroes.png';
+import logoImg from '../../assets/logo.svg';
+
+import Alert from '../../components/Alert';
+import BackLink from '../../components/BackLink';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
+import { Container, LogIn } from './styles';
 
 export default function Logon() {
+  const themeContext = useContext(ThemeContext).colors;
   const [id, setId] = useState('');
   const history = useHistory();
 
@@ -23,35 +29,36 @@ export default function Logon() {
 
       history.push('/profile');
     } catch (error) {
-      alert('Falha no login, tente novamente.');
+      Alert({
+        title: 'error',
+        content: 'Falha no login, Tente novamente!',
+      });
     }
   }
 
   return (
-    <div className="logon-container">
+    <Container>
       <section className="form">
         <img src={logoImg} alt="Be The Hero" />
 
         <form onSubmit={handleLogin}>
           <h1>Faça seu logon</h1>
 
-          <input
-            placeholder="Sua ID"
+          <Input
             value={id}
             onChange={e => setId(e.target.value)}
+            placeholder="Seu ID"
           />
-          <button className="button" type="submit">
-            Entrar
-          </button>
+          <Button type="submit">Entrar</Button>
 
-          <Link className="back-link" to="/register">
-            <FiLogIn size={16} color="#E02041" />
+          <BackLink to="/register">
+            <LogIn size={16} color={themeContext.primary} />
             Não tenho cadastro
-          </Link>
+          </BackLink>
         </form>
       </section>
 
       <img src={heroesImg} alt="Heroes" />
-    </div>
+    </Container>
   );
 }

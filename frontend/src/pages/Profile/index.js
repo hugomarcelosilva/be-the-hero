@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FiPower, FiTrash2 } from 'react-icons/fi';
+import { ThemeContext } from 'styled-components';
 
+import { FiPower, FiTrash2 } from 'react-icons/fi';
 import api from '../../services/api';
-import './styles.css';
 
 import logoImg from '../../assets/logo.svg';
 
+import Alert from '../../components/Alert';
+import Button from '../../components/Button';
+import { Container, Header, List } from './styles';
+
 export default function Profile() {
+  const themeContext = useContext(ThemeContext).colors;
   const [incidents, setIncidents] = useState([]);
 
   const history = useHistory();
@@ -26,17 +31,33 @@ export default function Profile() {
       });
   }, [ongId]);
 
-  async function handleDeleteIncident(id) {
+  async function handleDeleteIncident(item) {
     try {
-      await api.delete(`incidents/${id}`, {
+      await api.delete(`incidents/${item.id}`, {
         headers: {
           Authorization: ongId,
         },
       });
 
-      setIncidents(incidents.filter(incident => incident.id !== id));
+      setIncidents(incidents.filter(incident => incident.id !== item.id));
+
+      Alert({
+        type: 'success',
+        title: 'Sucesso',
+        content: (
+          <p
+            onClick={() => handleRecuperationIncidents(item)}
+            style={{ cursor: 'pointer' }}
+          >
+            Incidente excluído com sucesso, <b>clique para restaurar!</b>
+          </p>
+        ),
+      });
     } catch (error) {
-      alert('Erro ao deletar caso, tente novamente.');
+      Alert({
+        title: 'Error',
+        content: 'Erro ao deletar, tente novamente mais tarde!',
+      });
     }
   }
 
@@ -45,23 +66,52 @@ export default function Profile() {
     history.push('/');
   }
 
+  async function handleRecuperationIncidents(data) {
+    const { title, description, value } = data;
+
+    try {
+      await api.post(
+        '/incidents',
+        { title, description, value },
+        {
+          headers: {
+            Authorization: ongId,
+          },
+        }
+      );
+
+      setIncidents(incidents);
+
+      Alert({
+        type: 'success',
+        title: 'Sucesso',
+        content: 'Incidente restaurado com sucesso!',
+      });
+    } catch (error) {
+      Alert({
+        title: 'Error',
+        content: `Erro: ${error}, no restauramento do Incident, tente novamente mais tarde!`,
+      });
+    }
+  }
+
   return (
-    <div className="profile-container">
-      <header>
+    <Container>
+      <Header>
         <img src={logoImg} alt="Be The Hero" />
         <span>Bem vinda, {ongName}</span>
 
-        <Link className="button" to="/incidents/new">
-          Cadastrar novo caso
-        </Link>
-        <button onClick={handleLogout} type="button">
-          <FiPower size={18} color="#E02041" />
+        <Button className="link">
+          <Link to="/incidents/new">Cadastrar novo caso</Link>
+        </Button>
+        <button onClick={handleLogout} className="button" type="button">
+          <FiPower size={18} color={themeContext.primary} />
         </button>
-      </header>
+      </Header>
 
       <h1>Casos cadastrados</h1>
 
-      <ul>
+      <List>
         {incidents.map(incident => (
           <li key={incident.id}>
             <strong>CASO:</strong>
@@ -79,14 +129,14 @@ export default function Profile() {
             </p>
 
             <button
-              onClick={() => handleDeleteIncident(incident.id)}
+              onClick={() => handleDeleteIncident(incident)}
               type="button"
             >
-              <FiTrash2 size={20} color="#a8a8B3" />
+              <FiTrash2 size={20} color={themeContext.text} />
             </button>
           </li>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Container>
   );
 }

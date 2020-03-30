@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FiArrowLeft } from 'react-icons/fi';
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { ThemeContext } from 'styled-components';
 
 import api from '../../services/api';
-import './styles.css';
 
 import logoImg from '../../assets/logo.svg';
+
+import Alert from '../../components/Alert';
+import BackLink from '../../components/BackLink';
+import Button from '../../components/Button';
+import Input, { TextArea } from '../../components/Input';
+import { Container, Content, ArrowLeft } from './styles';
 
 export default function NewIncident() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
 
+  const themeContext = useContext(ThemeContext).colors;
   const history = useHistory();
   const ongId = localStorage.getItem('ongId');
 
@@ -33,13 +39,16 @@ export default function NewIncident() {
 
       history.push('/profile');
     } catch (error) {
-      alert('Erro ao cadastrar caso, tente novamente.');
+      Alert({
+        title: 'Error',
+        content: 'Erro no cadastro tente novamente mais tarde!',
+      });
     }
   }
 
   return (
-    <div className="new-incident-container">
-      <div className="content">
+    <Container>
+      <Content>
         <section>
           <img src={logoImg} alt="Be The Hero" />
 
@@ -49,34 +58,32 @@ export default function NewIncident() {
             isso.
           </p>
 
-          <Link className="back-link" to="/profile">
-            <FiArrowLeft size={16} color="#E02041" />
+          <BackLink to="/profile">
+            <ArrowLeft size={16} color={themeContext.primary} />
             Voltar para home
-          </Link>
+          </BackLink>
         </section>
 
         <form onSubmit={handleNewIncident}>
-          <input
-            placeholder="Título do caso"
+          <Input
             value={title}
             onChange={e => setTitle(e.target.value)}
+            placeholder="Título do caso"
           />
-          <textarea
-            placeholder="Descrição"
+          <TextArea
             value={description}
             onChange={e => setDescription(e.target.value)}
+            placeholder="Descrição"
           />
-          <input
-            placeholder="Valor em reais"
+          <Input
             value={value}
             onChange={e => setValue(e.target.value)}
+            placeholder="Valor em reais"
           />
 
-          <button className="button" type="submit">
-            Cadastrar
-          </button>
+          <Button type="submit">Cadastrar</Button>
         </form>
-      </div>
-    </div>
+      </Content>
+    </Container>
   );
 }

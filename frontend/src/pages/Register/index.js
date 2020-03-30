@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FiArrowLeft } from 'react-icons/fi';
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { ThemeContext } from 'styled-components';
 
 import api from '../../services/api';
-import './styles.css';
 
 import logoImg from '../../assets/logo.svg';
+
+import Alert from '../../components/Alert';
+import BackLink from '../../components/BackLink';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
+import { Container, Content, ArrowLeft } from './styles';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -14,6 +19,7 @@ export default function Register() {
   const [city, setCity] = useState('');
   const [uf, setUf] = useState('');
 
+  const themeContext = useContext(ThemeContext).colors;
   const history = useHistory();
 
   async function handleRegister(e) {
@@ -34,13 +40,16 @@ export default function Register() {
 
       history.push('/');
     } catch (error) {
-      alert('Erro no cadastro, tente novamente.');
+      Alert({
+        title: 'Error',
+        content: 'Erro no cadastro tente novamente mais tarde!',
+      });
     }
   }
 
   return (
-    <div className="register-container">
-      <div className="content">
+    <Container>
+      <Content>
         <section>
           <img src={logoImg} alt="Be The Hero" />
 
@@ -50,49 +59,47 @@ export default function Register() {
             os casos da sua ONG.
           </p>
 
-          <Link className="back-link" to="/">
-            <FiArrowLeft size={16} color="#E02041" />
+          <BackLink to="/">
+            <ArrowLeft size={16} color={themeContext.primary} />
             Voltar para o logon
-          </Link>
+          </BackLink>
         </section>
 
         <form onSubmit={handleRegister}>
-          <input
-            placeholder="Nome da ONG"
+          <Input
             value={name}
             onChange={e => setName(e.target.value)}
+            placeholder="Nome da ONG"
           />
-          <input
-            type="email"
-            placeholder="E-mail"
+          <Input
             value={email}
             onChange={e => setEmail(e.target.value)}
+            type="email"
+            placeholder="E-mail"
           />
-          <input
-            placeholder="WhatsApp"
+          <Input
             value={whatsapp}
             onChange={e => setWhatsapp(e.target.value)}
+            placeholder="WhatsApp"
           />
 
           <div className="input-group">
-            <input
-              placeholder="Cidade"
+            <Input
               value={city}
               onChange={e => setCity(e.target.value)}
+              placeholder="Cidade"
             />
-            <input
-              placeholder="UF"
-              style={{ width: 80 }}
+            <Input
               value={uf}
               onChange={e => setUf(e.target.value)}
+              placeholder="UF"
+              style={{ width: 80 }}
             />
           </div>
 
-          <button className="button" type="submit">
-            Cadastrar
-          </button>
+          <Button type="submit">Cadastrar</Button>
         </form>
-      </div>
-    </div>
+      </Content>
+    </Container>
   );
 }
