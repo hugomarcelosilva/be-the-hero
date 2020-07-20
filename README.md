@@ -20,6 +20,10 @@
 
 ## :gear: Back-end
 
+### :information_source: Deploy
+
+- https://be-the-hero-api-hugo.herokuapp.com/
+
 ### :information_source: Instruções Back-end
 
 ```bash
@@ -33,6 +37,10 @@ yarn start
 ---
 
 ## :computer: Front-end
+
+### :information_source: Deploy
+
+- https://be-the-hero-web-hugo.herokuapp.com/
 
 ### :information_source: Instruções Front-end
 
